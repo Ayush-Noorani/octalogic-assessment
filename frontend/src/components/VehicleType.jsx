@@ -1,10 +1,11 @@
 import React from "react";
 
 const VehicleType = () => {
-  const vehicle = ["i20", "BMW", "Fortuner"];
+  const bikes = ["sports", "cruiser"];
+  const cars = ["sedan", "hatchback", "suv"];
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-      {vehicle.map((vehicle, index) => {
+      {cars.map((vehicle, index) => {
         return (
           <div key={index}>
             <input
