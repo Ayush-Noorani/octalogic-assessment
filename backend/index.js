@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const APIroutes = require("./routes/APIroutes");
 const cors = require("cors");
+require("dotenv").config();
 
 const port = 3001;
 
