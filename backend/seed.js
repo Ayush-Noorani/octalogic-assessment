@@ -24,26 +24,26 @@ const seedData = async () => {
     const noofwheelsIds = noofwheelsResult.rows.map((row) => row.id);
 
     const vehiletypeResult = await client.query(`
-        INSERT INTO vehicleType (type, wheelId)
+        INSERT INTO vehicletype (type, wheelid)
         VALUES
-          ("Sedan", ${noofwheelsIds[0]}),
-          ("SUV", ${noofwheelsIds[0]}),
-          ("Hatchback", ${noofwheelsIds[0]}),
-          ("Sports", ${noofwheelsIds[1]}),
-          ("Cruiser", ${noofwheelsIds[1]})
+          ('Sedan', ${noofwheelsIds[0]}),
+          ('SUV', ${noofwheelsIds[0]}),
+          ('Hatchback', ${noofwheelsIds[0]}),
+          ('Sports', ${noofwheelsIds[1]}),
+          ('Cruiser', ${noofwheelsIds[1]})
           RETURNING id;
         `);
 
     const vehicletypeIds = vehiletypeResult.rows.map((row) => row.id);
 
     await client.query(`
-        INSERT INTO vehiclemodel (model, vehicleType)
+        INSERT INTO vehiclemodel (model, vehicletype)
         VALUES
-          ("i20", ${vehicletypeIds[2]}),
-          ("Thar", ${vehicletypeIds[1]}),
-          ("Slavia", ${vehicletypeIds[0]}),
-          ("S1000RR", ${vehicletypeIds[3]}),
-          ("Harley883Iron", ${vehicletypeIds[4]});
+          ('i20', ${vehicletypeIds[2]}),
+          ('Thar', ${vehicletypeIds[1]}),
+          ('Slavia', ${vehicletypeIds[0]}),
+          ('S1000RR', ${vehicletypeIds[3]}),
+          ('Harley883Iron', ${vehicletypeIds[4]});
         `);
     await client.query("COMMIT");
 
