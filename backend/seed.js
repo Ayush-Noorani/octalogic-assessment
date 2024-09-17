@@ -26,11 +26,11 @@ const seedData = async () => {
     const vehiletypeResult = await client.query(`
         INSERT INTO vehicletype (type, wheelid)
         VALUES
-          ('Sedan', ${noofwheelsIds[0]}),
-          ('SUV', ${noofwheelsIds[0]}),
-          ('Hatchback', ${noofwheelsIds[0]}),
-          ('Sports', ${noofwheelsIds[1]}),
-          ('Cruiser', ${noofwheelsIds[1]})
+          ('Sedan', ${noofwheelsIds[1]}),
+          ('SUV', ${noofwheelsIds[1]}),
+          ('Hatchback', ${noofwheelsIds[1]}),
+          ('Sports', ${noofwheelsIds[0]}),
+          ('Cruiser', ${noofwheelsIds[0]})
           RETURNING id;
         `);
 
