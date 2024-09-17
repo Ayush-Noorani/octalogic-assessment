@@ -12,15 +12,37 @@ function App() {
     LastName: "",
     Wheels: 2,
     VehicleType: "",
-    RequiredOn: "",
+    VehicleModel: "",
+    FromDate: "",
+    ToDate: "",
   });
 
+  const updateBookingInformation = (key, value) => {
+    if (Object.keys(userFormData).includes(key)) {
+      setUserFormData((prev) => {
+        return {
+          ...prev,
+          [key]: value,
+        };
+      });
+    }
+  };
+
   const { currentFormStep, step, formLength, next } = useNavigationFormSteps([
-    <Name />,
-    <NumberOfWheels />,
-    <VehicleType />,
-    <VehicleModel />,
-    <BookingDate />,
+    <Name updateBookingInformation={updateBookingInformation} />,
+    <NumberOfWheels updateBookingInformation={updateBookingInformation} />,
+    <VehicleType
+      {...userFormData}
+      updateBookingInformation={updateBookingInformation}
+    />,
+    <VehicleModel
+      {...userFormData}
+      updateBookingInformation={updateBookingInformation}
+    />,
+    <BookingDate
+      {...userFormData}
+      updateBookingInformation={updateBookingInformation}
+    />,
   ]);
 
   const onSubmit = (e) => {
