@@ -53,6 +53,8 @@ const createTableBookings = async () => {
   const query = `
         CREATE TABLE IF NOT EXISTS VehicleBookings (
           id SERIAL PRIMARY KEY,
+          first_name VARCHAR(100) NOT NULL,
+          last_name VARCHAR(100),
           model VARCHAR(100) NOT NULL,
           type VARCHAR(100) NOT NULL,
           fromdate DATE NOT NULL,

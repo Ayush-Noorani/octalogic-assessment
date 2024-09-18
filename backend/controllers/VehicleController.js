@@ -1,6 +1,23 @@
 const pool = require("../db/connect.js");
 
-const confirmVehicleBooking = async (req, res) => {};
+const confirmVehicleBooking = async (req, res) => {
+  const userForm = req.body;
+  const insertBookingQuery = `INSERT INTO vehiclebookings (first_name, last_name, model, type, fromdate, todate) VALUES ($1, $2, $3, $4, $5, $6);`;
+  const insertBookingResult = await pool.query(insertBookingQuery, [
+    userForm.FirstName,
+    userForm.LastName,
+    userForm.VehicleModel,
+    userForm.VehicleType,
+    userForm.FromDate,
+    userForm.ToDate,
+  ]);
+
+  if (insertBookingResult.rows.length === 0) {
+    res.status(200).json({ data: "Booking Successful" });
+  } else {
+    res.status(400).json({ data: "Booking Failed" });
+  }
+};
 
 const getNoOfWheels = async (req, res) => {
   try {
