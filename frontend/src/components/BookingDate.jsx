@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const BookingDate = ({
-  VehicleModel,
-  VehicleType,
+  userFormData,
   updateBookingInformation,
+  checkingForAvailability,
 }) => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -12,26 +12,45 @@ const BookingDate = ({
   useEffect(() => {
     if (fromDate && toDate) {
       setLoading(true);
-      fetch(
-        `http://localhost:3001/checIfAvailableOnDate?model=${VehicleModel}&type=${VehicleType}&from=${fromDate}&to=${toDate}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
+      checkingForAvailability(true);
+
+      if (toDate < fromDate) {
+        alert("Please select correct dates");
+        setLoading(false);
+      } else {
+        const dataValidation = Object.keys(userFormData).every(
+          (key) =>
+            userFormData[key] !== null &&
+            userFormData[key] !== undefined &&
+            userFormData[key] !== ""
+        );
+
+        if (dataValidation) {
+          fetch(
+            `http://localhost:3001/checIfAvailableOnDate?model=${userFormData.VehicleModel}&type=${userFormData.VehicleType}&from=${fromDate}&to=${toDate}`
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.data.length == 0) {
+                alert("Booking Available. Please submit the form");
+                setLoading(false);
+                checkingForAvailability(false);
+              } else {
+                alert(
+                  "Booking Unavailable. Please select a different date or vehicle"
+                );
+                setLoading(false);
+              }
+            });
+        } else {
+          alert(
+            "You have missed out some options. Please select missing values."
+          );
           setLoading(false);
-          if (data.data.length == 0) {
-            setTimeout(() => {
-              alert("Booking Available. Please submit the form");
-            }, 3000);
-          } else {
-            setTimeout(() => {
-              alert(
-                "Booking Unavailable. Please select a different date or vehicle"
-              );
-            }, 5000);
-          }
-        });
+        }
+      }
     }
-  }, [toDate, fromDate]);
+  }, [fromDate, toDate]);
 
   const handleDateSelection = (e) => {
     if (e.target.name == "FromDate") {
