@@ -13,9 +13,9 @@ const confirmVehicleBooking = async (req, res) => {
   ]);
 
   if (insertBookingResult.rows.length === 0) {
-    res.status(200).json({ data: "Booking Successful" });
+    res.status(200).json({ message: "Booking Successful" });
   } else {
-    res.status(400).json({ data: "Booking Failed" });
+    res.status(400).json({ message: "Booking Failed" });
   }
 };
 

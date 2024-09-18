@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./index.css";
 import { useNavigationFormSteps } from "./hooks/useNavigateFormSteps";
 import Name from "./components/Name";
 import NumberOfWheels from "./components/NumberOfWheels";
@@ -10,7 +11,7 @@ function App() {
   const [userFormData, setUserFormData] = useState({
     FirstName: "",
     LastName: "",
-    Wheels: 2,
+    Wheels: "",
     VehicleType: "",
     VehicleModel: "",
     FromDate: "",
@@ -27,7 +28,11 @@ function App() {
       });
     }
   };
+  const [loading, setLoading] = useState(false);
+  const [isCheckingForAvailability, setIsCheckingForAvailability] =
+    useState(false);
 
+  const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
   const { currentFormStep, step, formLength, next } = useNavigationFormSteps([
     <Name updateBookingInformation={updateBookingInformation} />,
     <NumberOfWheels updateBookingInformation={updateBookingInformation} />,
@@ -40,28 +45,75 @@ function App() {
       updateBookingInformation={updateBookingInformation}
     />,
     <BookingDate
-      {...userFormData}
+      userFormData={userFormData}
       updateBookingInformation={updateBookingInformation}
+      checkingForAvailability={setIsCheckingForAvailability}
     />,
   ]);
 
+  const submitBooking = async () => {
+    setLoading(true);
+    try {
+      console.log("CAlling");
+      const response = await fetch(`http://localhost:3001/confirmBooking`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userFormData),
+      });
+
+      if (response) {
+        const result = await response.json();
+        if (result.message == "Booking Successful" && response.status == 200) {
+          setIsBookingConfirmed(true);
+        } else {
+          alert(result.message);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    next();
+    !(currentFormStep == formLength - 1) ? next() : submitBooking();
   };
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <div>
-          {step}
-          <div style={{ marginTop: "5px" }}>
-            <button type="submit">
-              {currentFormStep == formLength - 1 ? "Submit" : "Next"}
-            </button>
-          </div>
-        </div>
-      </form>
+      {loading && <h2>Submitting Booking Form ... </h2>}
+      {!loading && (
+        <>
+          <form onSubmit={onSubmit}>
+            <div>
+              {isBookingConfirmed ? (
+                <>
+                  <h3>
+                    Booking Confirmed for {userFormData.VehicleModel} From:{" "}
+                    {userFormData.FromDate} To: {userFormData.ToDate}
+                  </h3>
+                </>
+              ) : (
+                <>
+                  {step}
+                  <div style={{ marginTop: "5px" }}>
+                    <button
+                      type="submit"
+                      style={{ width: "10%" }}
+                      disabled={isCheckingForAvailability}
+                    >
+                      {currentFormStep == formLength - 1 ? "Submit" : "Next"}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </form>
+        </>
+      )}
     </div>
   );
 }
