@@ -17,7 +17,10 @@ const start = () => {
     app.listen(port, async () => {
       console.log("Listening on port " + port);
       try {
-        await setupDB();
+        if (!process.env.DB_TABLES_CREATED) {
+          await setupDB();
+          process.env.DB_TABLES_CREATED = true;
+        }
       } catch (e) {
         console.log("Erro when trying to setup database tables", e);
       }
