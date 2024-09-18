@@ -21,6 +21,7 @@ const VehicleModel = ({ VehicleType, updateBookingInformation }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+      <h2>Vehicle Model</h2>
       {loading && <h3>Please wait ... </h3>}
       {!loading && (
         <>

@@ -21,6 +21,7 @@ const VehicleType = ({ Wheels, updateBookingInformation }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+      <h2>Type of Vehicle</h2>
       {loading && <h3>Please wait ... </h3>}
       {!loading && (
         <>

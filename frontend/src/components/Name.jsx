@@ -2,9 +2,12 @@ import React from "react";
 
 const Name = ({ updateBookingInformation }) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+      className="step1div"
+    >
       <h2>First, What's Your Name ?</h2>
-      <div style={{ display: "flex", flexDirection: "column", width: "10%" }}>
+      <div className="InputDiv">
         <label>First Name</label>
         <input
           type="text"
@@ -16,7 +19,7 @@ const Name = ({ updateBookingInformation }) => {
           }
         />
       </div>
-      <div style={{ display: "flex", flexDirection: "column", width: "10%" }}>
+      <div className="InputDiv">
         <label>Last Name</label>
         <input
           type="text"

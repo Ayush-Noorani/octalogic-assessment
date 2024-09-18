@@ -1,7 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 body {
-  margin: 20px; /* Adjust the margin as needed */
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Adjust the margin as needed */
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+
+.formDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+
+.InputDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

@@ -69,7 +69,7 @@ const BookingDate = ({
         {loading && <h3>Checking for availability ... </h3>}
         {!loading && (
           <>
-            <div>
+            <div className="InputDiv">
               <label>From: </label>
               <input
                 type="date"
@@ -78,7 +78,7 @@ const BookingDate = ({
                 onChange={handleDateSelection}
               />
             </div>
-            <div>
+            <div className="InputDiv">
               <label>To: </label>
               <input
                 type="date"

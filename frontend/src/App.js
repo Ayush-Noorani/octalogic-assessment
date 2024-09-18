@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./index.css";
 import { useNavigationFormSteps } from "./hooks/useNavigateFormSteps";
 import Name from "./components/Name";
 import NumberOfWheels from "./components/NumberOfWheels";
@@ -54,7 +53,6 @@ function App() {
   const submitBooking = async () => {
     setLoading(true);
     try {
-      console.log("CAlling");
       const response = await fetch(`http://localhost:3001/confirmBooking`, {
         method: "POST",
         headers: {
@@ -83,10 +81,10 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="main">
       {loading && <h2>Submitting Booking Form ... </h2>}
       {!loading && (
-        <>
+        <div className="formDiv">
           <form onSubmit={onSubmit}>
             <div>
               {isBookingConfirmed ? (
@@ -102,7 +100,7 @@ function App() {
                   <div style={{ marginTop: "5px" }}>
                     <button
                       type="submit"
-                      style={{ width: "10%" }}
+                      style={{ width: "100%" }}
                       disabled={isCheckingForAvailability}
                     >
                       {currentFormStep == formLength - 1 ? "Submit" : "Next"}
@@ -112,7 +110,7 @@ function App() {
               )}
             </div>
           </form>
-        </>
+        </div>
       )}
     </div>
   );
