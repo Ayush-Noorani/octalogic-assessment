@@ -46,7 +46,25 @@ const getVehileModel = async (req, res) => {
   }
 };
 
-const checIfAvailableOnDate = (req, res) => {};
+const checIfAvailableOnDate = async (req, res) => {
+  const fromDate = req.query.from;
+  const toDate = req.query.to;
+  const vehiclemodel = req.query.model;
+  const vehicletype = req.query.type;
+
+  const getVehicleModelAvailabilityQuery =
+    "SELECT * FROM vehiclebookings WHERE model = $1 AND type = $2 AND ( fromDate <= $3 AND toDate >= $4 );";
+
+  try {
+    const getVehicleModelAvailabilityResult = await pool.query(
+      getVehicleModelAvailabilityQuery,
+      [vehiclemodel, vehicletype, fromDate, toDate]
+    );
+    res.status(200).json({ data: getVehicleModelAvailabilityResult.rows });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = {
   confirmVehicleBooking,

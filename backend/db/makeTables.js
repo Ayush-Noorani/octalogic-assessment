@@ -49,11 +49,30 @@ const createTableVehicleModel = async () => {
   }
 };
 
+const createTableBookings = async () => {
+  const query = `
+        CREATE TABLE IF NOT EXISTS VehicleBookings (
+          id SERIAL PRIMARY KEY,
+          model VARCHAR(100) NOT NULL,
+          type VARCHAR(100) NOT NULL,
+          fromdate DATE NOT NULL,
+          todate DATE NOT NULL
+        );
+      `;
+  try {
+    await pool.query(query);
+    console.log("Bookings Table created successfully.");
+  } catch (error) {
+    console.error("Error creating table bookings:", error.stack);
+  }
+};
+
 const setupDB = async () => {
   try {
     await createTableNoOfWheels();
     await createTableVehicleType();
     await createTableVehicleModel();
+    await createTableBookings();
     console.log("Tables created successfully");
   } catch (e) {
     console.log("Error creating tables: ", e);
